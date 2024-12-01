@@ -1,0 +1,5 @@
+これはThymeleafテキストサンプルです。
+[# th:if=${display}]======
+  displayがtrueのときは[# th:utext="${#dates.format(subscriptionDate, 'dd/MMM/yyyy HH:mm')}" /]表示されます。
+======
+[/]末尾です。
