@@ -9,16 +9,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
 
 @Configuration
 public class ThymeleafConfig implements ApplicationContextAware, EnvironmentAware {
     @Bean
     TemplateEngine textTemplateEngine() {
-		final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		final org.thymeleaf.spring6.SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.addTemplateResolver(textTemplateResolver());
 		templateEngine.setTemplateEngineMessageSource(textMessageSource());
 		return templateEngine;
