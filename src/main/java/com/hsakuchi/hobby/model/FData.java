@@ -11,6 +11,5 @@ public class FData {
 	
 	private String htmlText;
 	private String sampleText;
-	private int num = 1;
 
 }
