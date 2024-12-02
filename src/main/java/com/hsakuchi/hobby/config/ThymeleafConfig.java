@@ -37,7 +37,7 @@ public class ThymeleafConfig implements ApplicationContextAware, EnvironmentAwar
 	}
 
     @Bean
-    public ResourceBundleMessageSource textMessageSource() {
+    ResourceBundleMessageSource textMessageSource() {
 		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("mail/Messages");
 		return messageSource;

@@ -16,8 +16,9 @@ public class TextController {
 	
 	@GetMapping("/home")
 	public String view(Model model,FData fdata) {
-		model.addAttribute("fdata",fdata = new FData());
 		thymeleafText.process(fdata);
+		String sentence = fdata.getHtmlText();
+		model.addAttribute("sentence", sentence);
 		return "log_list";
 	}
 	
