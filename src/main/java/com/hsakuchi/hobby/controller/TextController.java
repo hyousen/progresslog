@@ -1,5 +1,7 @@
 package com.hsakuchi.hobby.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,15 +27,17 @@ public class TextController {
 	}
 
 	@GetMapping("/diary")
-	public String toukou( Model model) {
+	public String toukou(Model model) {
 		model.addAttribute("fdata", new FData());
 		return "diary";
 	}
-	
+
 	@PostMapping("/result")
 	public String result(Model model, FData fdata) {
 		String sentence = fdata.getSampleText();
+		Date date = new Date();
 		model.addAttribute("sentence", sentence);
+		model.addAttribute("date", date);
 		return "result";
 	}
 }
