@@ -27,26 +27,11 @@
 			<span class="navbar-brand mb-0 h1">佐久知の作業ログ</span>
 		</div>
 	</nav>
-
 	<div class="container">
 		<div class="row">
-			<div class="col mb-3">
-				<label for="createdate" class="form-label" >作成日時</label>
-				<input type="text" class="form-control" id="createdate">
-			</div>
-			<div class="col mb-3">
-				<label for="keyword" class="form-label">キーワード</label>
-				<input type="text" class="form-control" id="keyword">
-			</div>
-		</div>
-		<div class="row">
 			<div class="col">
-				<th:block th:if="${sentence}">
-					<th:block th:each="str, stat : ${sentence.split('\r\n|\r|\n', -1)}">
-						<th:block th:text="${str}" />
-						<br th:if="${!stat.last}" />
-					</th:block>
-				</th:block>
+				<label>投稿結果</label>
+				<p th:text="${sentence}"></p>
 			</div>
 		</div>
 	</div>
