@@ -30,23 +30,18 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col mb-3">
-				<label for="createdate" class="form-label" >作成日時</label>
-				<input type="text" class="form-control" id="createdate">
-			</div>
-			<div class="col mb-3">
-				<label for="keyword" class="form-label">キーワード</label>
-				<input type="text" class="form-control" id="keyword">
-			</div>
+			<form th:action="@{/result}" th:object=${fdata} method="post">
+				<label for="contribution" class="form-label">投稿内容</label>
+				<input type="text" class="form-control" th:field="*{sampleText}" id="contribution">
+				<div class="col d-flex flex-row-reverse mt-3">
+					<input type="submit" class="btn btn-success" value="投稿" />
+				</div>
+			</form>
 		</div>
+
 		<div class="row">
 			<div class="col">
-				<th:block th:if="${sentence}">
-					<th:block th:each="str, stat : ${sentence.split('\r\n|\r|\n', -1)}">
-						<th:block th:text="${str}" />
-						<br th:if="${!stat.last}" />
-					</th:block>
-				</th:block>
+
 			</div>
 		</div>
 	</div>
