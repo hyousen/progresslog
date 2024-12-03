@@ -31,7 +31,7 @@ public class ThymeleafText {
 		final Context ctx = new Context(Locale.getDefault());
 		ctx.setVariable("subscriptionDate", new Date());	
 		ctx.setVariable("display", true);
-		String text = this.templateEngine.process("/log20200806.txt", ctx);
+		String text = this.templateEngine.process("/mail/sample.txt", ctx);
 		
 		fdata.setHtmlText(text);
 	}
