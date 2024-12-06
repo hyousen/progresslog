@@ -1,5 +1,6 @@
 package com.hsakuchi.hobby.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.hsakuchi.hobby.model.FData;
 public class TextController {
 	@Autowired
 	private ThymeleafText thymeleafText;
+	private String postSentence;
 
 	@GetMapping("/home")
 	public String view(Model model, FData fdata) {
@@ -26,18 +28,33 @@ public class TextController {
 		return "log_list";
 	}
 
-	@GetMapping("/diary")
+	@GetMapping("/toukou")
 	public String toukou(Model model) {
 		model.addAttribute("fdata", new FData());
-		return "diary";
+		return "toukou";
 	}
 
+//	@PostMapping("/kakunin")
+//	public String kakunin(Model model, FData fdata) {
+//		String sentence = fdata.getPostText();
+//		Date date = new Date();
+//		sentence = convert(sentence,date);
+//		model.addAttribute("sentence", sentence);
+//		return "kakunin";
+//	}
+	
 	@PostMapping("/result")
-	public String result(Model model, FData fdata) {
-		String sentence = fdata.getSampleText();
+	public String result(Model model,FData fdata){
+		String sentence = fdata.getPostText();
 		Date date = new Date();
+		sentence = convert(sentence,date);
 		model.addAttribute("sentence", sentence);
-		model.addAttribute("date", date);
 		return "result";
+	}
+	
+	private String convert(String sentence,Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		postSentence = "・" + sentence + "　　　" + sdf.format(date);
+		return postSentence;
 	}
 }
