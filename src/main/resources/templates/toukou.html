@@ -30,11 +30,13 @@
 
 	<div class="container">
 		<div class="row">
+
 			<form th:action="@{/result}" th:object=${fdata} method="post">
 				<label for="contribution" class="form-label">投稿内容</label>
-				<input type="text" class="form-control" th:field="*{sampleText}" id="contribution">
-				<div class="col d-flex flex-row-reverse mt-3">
-					<input type="submit" class="btn btn-success" value="投稿" />
+				<input type="text" class="form-control" th:field="*{postText}" id="contribution">
+
+				<div class="col mt-3">
+					<input type="submit" class="btn btn-success" value="投稿する" />
 				</div>
 			</form>
 		</div>

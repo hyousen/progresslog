@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class FData {
 	
 	private String htmlText;
-	private String sampleText;
+	private String postText;
 
 }
