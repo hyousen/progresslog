@@ -31,12 +31,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col mb-3">
-				<label for="createdate" class="form-label" >作成日時</label>
-				<input type="text" class="form-control" id="createdate">
-			</div>
-			<div class="col mb-3">
-				<label for="keyword" class="form-label">キーワード</label>
-				<input type="text" class="form-control" id="keyword">
+				<form th:action="@{/toukou}"  method="get">
+					<div class="col mt-3">
+						<input type="submit" class="btn btn-success" value="投稿する" />
+					</div>
+				</form>
 			</div>
 		</div>
 		<div class="row">

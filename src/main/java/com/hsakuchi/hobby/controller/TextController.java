@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hsakuchi.hobby.TextFileWrite;
 import com.hsakuchi.hobby.component.ThymeleafText;
 import com.hsakuchi.hobby.model.FData;
 
@@ -18,10 +19,11 @@ import com.hsakuchi.hobby.model.FData;
 public class TextController {
 	@Autowired
 	private ThymeleafText thymeleafText;
-	private String postSentence;
+	private TextFileWrite textFileWrite;
 
 	@GetMapping("/home")
-	public String view(Model model, FData fdata) {
+	public String view(Model model) {
+		FData fdata =new FData();
 		thymeleafText.process(fdata);
 		String sentence = fdata.getHtmlText();
 		model.addAttribute("sentence", sentence);
@@ -53,8 +55,18 @@ public class TextController {
 	}
 	
 	private String convert(String sentence,Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		postSentence = "・" + sentence + "　　　" + sdf.format(date);
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		String postSentence = "・" + sentence + "　　　" + sdf.format(date);
+		textFileWrite = new TextFileWrite();
+		textFileWrite.textWrite(postSentence);
 		return postSentence;
 	}
 }
+
+
+
+
+
+
+
+
