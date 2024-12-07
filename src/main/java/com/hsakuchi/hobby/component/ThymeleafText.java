@@ -1,7 +1,6 @@
 package com.hsakuchi.hobby.component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,11 +31,11 @@ public class ThymeleafText {
 	public void process(FData fdata) {
 		final Context ctx = new Context(Locale.getDefault());
 		LocalDateTime date = LocalDateTime.now();
-		String text = this.templateEngine.process("/log20200806.txt", ctx);
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH/mm/ss");
-		String sentence = text + "　　　" + dtf.format(date);
+		String text = this.templateEngine.process("/log1.txt", ctx);
 
-		fdata.setHtmlText(sentence);
+		fdata.setHtmlText(text);
+		log.info("\n" + date);
+		log.info("\n" + text);
 	}
 
 }
