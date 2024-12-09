@@ -28,14 +28,12 @@ public class ThymeleafText {
 		log.info(text);
 	}
 
-	public void process(FData fdata) {
+	public void process(FData fdata,int number) {
 		final Context ctx = new Context(Locale.getDefault());
 		LocalDateTime date = LocalDateTime.now();
-		String text = this.templateEngine.process("/log1.txt", ctx);
+		String text = this.templateEngine.process("/log" + number + ".txt", ctx);
 
 		fdata.setHtmlText(text);
-		log.info("\n" + date);
-		log.info("\n" + text);
 	}
 
 }
