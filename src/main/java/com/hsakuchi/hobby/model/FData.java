@@ -11,5 +11,6 @@ public class FData {
 	
 	private String htmlText;
 	private String postText;
+	private int dateNumber;
 
 }
