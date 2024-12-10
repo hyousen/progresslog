@@ -29,18 +29,16 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="col">
-				<label>投稿結果</label>
-				<div>
-					<p th:text="${sentence}"></p>
-				</div>
+			<div class="row">
+				<form th:action="@{/home/diary}" th:object=${fdata} method="post">
+					<label for="number" class="form-label">日時設定</label>
+					<input type="number" class="form-control" th:field="*{dateNumber}" id="number">
+					<a th:href="@{/home/diary}" class="btn btn-warning mt-3">作成する</a>
+					<a th:href="@{/home/create}" class="btn btn-warning me-1 mt-3">確認する</a>
+				</form>
 			</div>
-
-			<form th:action="@{/result}" method="post">
-				<input type="submit" class="btn btn-success " value="投稿する" />
-			</form>
 			<div>
-				<a href="/toukou" class="btn btn-secondary mt-1">修正する</a>
+				<p th:text="${text}"></p>
 			</div>
 		</div>
 	</div>

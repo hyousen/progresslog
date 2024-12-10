@@ -6,10 +6,10 @@ import java.io.IOException;
 
 public class TextFileWrite {
 
-	public void textWrite (String sentence, int number) {
+	public void textWrite (String sentence, String fileName) {
 
 		try {
-			File file = new File("C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\log" + number + ".txt");
+			File file = new File("C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\" + fileName + ".txt");
 
 			if (checkBeforeWritefile(file)) {
 				FileWriter filewriter = new FileWriter(file, true);
