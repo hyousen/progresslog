@@ -1,6 +1,5 @@
 package com.hsakuchi.hobby.controller;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,75 +15,63 @@ import com.hsakuchi.hobby.TextFileWrite;
 import com.hsakuchi.hobby.component.ThymeleafText;
 import com.hsakuchi.hobby.model.FData;
 
-@RequestMapping
 @Controller
 public class TextController {
 	@Autowired
 	private ThymeleafText thymeleafText;
 	private TextFileWrite textFileWrite;
 	private TextFileCreate textFileCreate;
-	private int number;
 
-//	@GetMapping("/home")
-//	public String home(Model model) {
-//		FData fdata = new FData();
-//		model.addAttribute(fdata);
-//		return "create_html";
-//	}
-	@GetMapping("/home/diary")
+	@RequestMapping("/home/create")
+	public String home(Model model,FData fdata) {
+		model.addAttribute(fdata);
+		return "create";
+	}
+	
+	@RequestMapping("/home/diary")
 	public String view(Model model,FData fdata) {
-		number = fdata.getDateNumber();
+		int number = fdata.getDateNumber();
 		thymeleafText.process(fdata, number);
 		String sentence = fdata.getHtmlText();
 		model.addAttribute("sentence", sentence);
 		return "log_list";
 	}
 
-	@GetMapping("/toukou")
+	@GetMapping("/home/toukou")
 	public String toukou(Model model) {
 		model.addAttribute("fdata", new FData());
 		return "toukou";
 	}
 	
-	@GetMapping("/home/create")
+	@GetMapping("/home")
 	public String create(Model model,FData fdata) {
 		model.addAttribute("fdata", fdata);
-		number = fdata.getDateNumber();
-		String message = "問題ありません";
-		textFileCreate = new TextFileCreate();
-		try {
-			textFileCreate.textCreate(number);
-			message =textFileCreate.getMessage();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		model.addAttribute("text", message);
-		return "create_html";
+		return "home";
 	}
-
-//	@PostMapping("/kakunin")
+//
+//	@PostMapping("/home/kakunin")
 //	public String kakunin(Model model, FData fdata) {
-//		String sentence = fdata.getPostText();
-//		Date date = new Date();
-//		sentence = convert(sentence,date);
+//		int number =fdata.getDateNumber();
+//		String sentence = " " + number;
 //		model.addAttribute("sentence", sentence);
 //		return "kakunin";
 //	}
-	
-	@PostMapping("/result")
+//	
+	@PostMapping("/home/result")
 	public String result(Model model,FData fdata){
 		String sentence = fdata.getPostText();
 		Date date = new Date();
-		sentence = createSentence(sentence,date);
+		String fileName ="log" + fdata.getDateNumber();
+		sentence = createSentence(sentence,date,fileName);
 		model.addAttribute("sentence", sentence);
 		return "result";
 	}
 	
-	private String createSentence(String sentence,Date date) {
+	private String createSentence(String sentence,Date date, String fileName) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		String postSentence = "・" + sentence + "　　　" + sdf.format(date);
 		textFileWrite = new TextFileWrite();
-		textFileWrite.textWrite(postSentence,number);
+		textFileWrite.textWrite(postSentence,fileName);
 		return postSentence;
 	}
 }

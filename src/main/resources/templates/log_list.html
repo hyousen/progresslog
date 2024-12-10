@@ -31,10 +31,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col mb-3">
-				<form th:action="@{/toukou}" method="get">
+				<form th:action="@{/home/toukou}" method="get">
 					<button type="submit" class="btn btn-success mt-1">投稿する</button>
-					<a th:href="@{/home}" class="btn btn-warning me-1 mt-1">作成する</a>
 					<a th:href="@{/home/diary}" class="btn btn-secondary me-1 mt-1">リロード</a>
+					<a th:href="@{/home}" class="btn btn-warning me-1 mt-1">戻る</a>
+				
 				</form>
 			</div>
 			<div class="row">
