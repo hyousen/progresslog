@@ -14,7 +14,6 @@ public class TextFileCreate {
 	public void textCreate(int number) throws IOException {
 
 		File file = new File("C:/hsakuchi/work/ProgressLog/src/main/resources/templates/log" + number + ".txt");
-		log.info("\n" + number);
 		if (file.createNewFile()) {
 			this.message = "新しいファイルがつくられました";
 		} else {
