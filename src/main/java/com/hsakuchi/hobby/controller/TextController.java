@@ -1,5 +1,6 @@
 package com.hsakuchi.hobby.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,17 +22,29 @@ public class TextController {
 	private ThymeleafText thymeleafText;
 	private TextFileWrite textFileWrite;
 	private TextFileCreate textFileCreate;
+	private int dataNumber;
 
 	@RequestMapping("/home/create")
-	public String home(Model model,FData fdata) {
-		model.addAttribute(fdata);
+	public String create(Model model,FData fdata) {
+		dataNumber = fdata.getDateNumber();
+		String message = "問題ありません";
+		textFileCreate = new TextFileCreate();
+		try {
+			textFileCreate.textCreate(dataNumber);
+			message = textFileCreate.getMessage();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String sentence = "log" + dataNumber + ".txtを指定します";
+		model.addAttribute("sentence",sentence);
+		model.addAttribute("message", message);
 		return "create";
 	}
-	
 	@RequestMapping("/home/diary")
 	public String view(Model model,FData fdata) {
-		int number = fdata.getDateNumber();
-		thymeleafText.process(fdata, number);
+		System.out.println(dataNumber);
+		thymeleafText.process(fdata, dataNumber);
 		String sentence = fdata.getHtmlText();
 		model.addAttribute("sentence", sentence);
 		return "log_list";
@@ -44,8 +57,8 @@ public class TextController {
 	}
 	
 	@GetMapping("/home")
-	public String create(Model model,FData fdata) {
-		model.addAttribute("fdata", fdata);
+	public String home(Model model) {
+		model.addAttribute("fdata", new FData());
 		return "home";
 	}
 //
@@ -61,7 +74,8 @@ public class TextController {
 	public String result(Model model,FData fdata){
 		String sentence = fdata.getPostText();
 		Date date = new Date();
-		String fileName ="log" + fdata.getDateNumber();
+		String fileName ="log" + dataNumber;
+		System.out.println(fileName);
 		sentence = createSentence(sentence,date,fileName);
 		model.addAttribute("sentence", sentence);
 		return "result";

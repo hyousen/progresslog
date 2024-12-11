@@ -31,11 +31,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/home/diary}" th:object=${fdata} method="post">
+				<form th:action="@{/home/create}" th:object=${fdata} method="post">
 					<label for="datenumber" class="form-label">日時検索</label>
-					<input type="number" class="form-control" id="datenumber">
-					<input type="submit" class="btn btn-primary mt-3" th:field="*{dateNumber}" value="デフォルト" ></input>
-					<a th:href="@{/home/create}" class="btn btn-warning me-1 mt-3">指定する</a>
+					<input type="number" class="form-control"th:field="*{dateNumber}" id="datenumber">
+					<input type="submit" class="btn btn-primary mt-3" value="指定する" ></input>
+					<a th:href="@{/home/diary}" class="btn btn-warning me-1 mt-3">デフォルト</a>
 				</form>
 			</div>
 		</div>
