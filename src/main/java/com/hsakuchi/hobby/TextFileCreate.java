@@ -12,8 +12,10 @@ public class TextFileCreate {
 	private String message;
 
 	public void textCreate(int number) throws IOException {
+		
+		String fileName = "log" + number;
 
-		File file = new File("C:/hsakuchi/work/ProgressLog/src/main/resources/templates/log" + number + ".txt");
+		File file = new File("C:/hsakuchi/work/ProgressLog/src/main/resources/templates/" + fileName + ".txt");
 		if (file.createNewFile()) {
 			this.message = "新しいファイルがつくられました";
 		} else {
