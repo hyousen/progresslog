@@ -34,5 +34,9 @@ public class TextFileWrite {
 		}
 		return false;
 	}
+	
+	public void titleWrite() {
+		
+	}
 
 }

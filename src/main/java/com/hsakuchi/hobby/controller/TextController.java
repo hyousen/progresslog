@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,11 +22,11 @@ public class TextController {
 	private ThymeleafText thymeleafText;
 	private TextFileWrite textFileWrite;
 	private TextFileCreate textFileCreate;
-	private final int tmp = 5;
-
+	private int dateNumber;
+	
 	@RequestMapping("/home/create")
 	public String create(Model model, FData fdata) {
-		int dateNumber = fdata.getDateNumber();
+		dateNumber = fdata.getDateNumber();
 		String message = "問題ありません";
 		textFileCreate = new TextFileCreate();
 		try {
@@ -41,26 +42,26 @@ public class TextController {
 		return "create";
 	}
 
-	//	@RequestMapping("/home/diary")
-	//	public String view(Model model,FData fdata) {
-	//		String message = "log" + dateNumber;
-	//		String sentence = thymeleafText.process(dateNumber);
-	//		model.addAttribute("fileName", message);
-	//		model.addAttribute("sentence", sentence);
-	//		return "log_list";
-	//	}
+		@RequestMapping("/home/diary")
+		public String view(Model model,FData fdata) {
+			String fileName = "log" + dateNumber;
+			String sentence = thymeleafText.process(dateNumber);
+			model.addAttribute("fileName", fileName);
+			model.addAttribute("sentence", sentence);
+			return "log_list";
+		}
 
-	//	@GetMapping("/home/toukou")
-	//	public String toukou(Model model) {
-	//		model.addAttribute("fdata", new FData());
-	//		System.out.println(dateNumber);
-	//		return "toukou";
-	//	}
+		@GetMapping("/home/toukou")
+		public String toukou(Model model) {
+			model.addAttribute("fdata", new FData());
+			System.out.println(dateNumber);
+			return "toukou";
+		}
 
 	@RequestMapping("/home")
 	public String home(Model model, FData fdata) {
 		model.addAttribute("fdata", fdata);
-		int dateNumber = fdata.getDateNumber();
+		
 		String fileName = "log" + dateNumber;
 		String sentence = thymeleafText.process(fileName);
 		model.addAttribute("fileName", fileName);
@@ -68,19 +69,19 @@ public class TextController {
 		return "home";
 	}
 
-	@RequestMapping("/home/next")
-	public String next(Model model, FData fdata) {
-		String postSentence = fdata.getPostText();
-		int dateNumber = tmp;
-		String fileName = "log" + dateNumber;
-		Date date = new Date();
-		postSentence = createSentence(postSentence, date, fileName);
-		String sentence = thymeleafText.process(fileName);
-		model.addAttribute("fileName", fileName);
-		model.addAttribute("fdata", fdata);
-		model.addAttribute("sentence", sentence);
-		return "home";
-	}
+//	@RequestMapping("/home/next")
+//	public String next(Model model, FData fdata) {
+//		String postSentence = fdata.getPostText();
+//		int dateNumber = 6;
+//		String fileName = "log" + dateNumber;
+//		Date date = new Date();
+//		postSentence = createSentence(postSentence, date, fileName);
+//		String sentence = thymeleafText.process(fileName);
+//		model.addAttribute("fileName", fileName);
+//		model.addAttribute("fdata", fdata);
+//		model.addAttribute("sentence", sentence);
+//		return "home";
+//	}
 	//	@PostMapping("/home/kakunin")
 	//	public String kakunin(Model model, FData fdata) {
 	//		String sentence = fdata.getPostText();
@@ -92,15 +93,14 @@ public class TextController {
 	public String result(Model model, FData fdata) {
 		String postSentence = fdata.getPostText();
 		Date date = new Date();
-		int dateNumber = tmp;
 		String fileName = "log" + dateNumber;
 		postSentence = createSentence(postSentence, date, fileName);
-		model.addAttribute("sentence", postSentence);
+		model.addAttribute("postSentence", postSentence);
 		return "result";
 	}
 
 	private String createSentence(String sentence, Date date, String fileName) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd日HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd日(E)HH:mm:ss");
 		String postSentence = "・" + sentence + "　　　" + sdf.format(date);
 		textFileWrite = new TextFileWrite();
 		textFileWrite.textWrite(postSentence, fileName);
