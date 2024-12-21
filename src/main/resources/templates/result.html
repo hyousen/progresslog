@@ -30,9 +30,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<form th:action="@{home}" method="post">
+				<form th:action="@{/home/diary}" method="post">
 					<label>投稿結果</label>
-					<p th:text="${sentence}"></p>
+					<p th:text="${postSentence}"></p>
 					<input type="submit" class="btn btn-warning" value="反映する"></input>
 				</form>
 			</div>
