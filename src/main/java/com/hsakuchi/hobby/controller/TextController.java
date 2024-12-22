@@ -23,7 +23,7 @@ public class TextController {
 	private TextFileWrite textFileWrite;
 	private TextFileCreate textFileCreate;
 	private int dateNumber;
-	
+
 	@RequestMapping("/home/create")
 	public String create(Model model, FData fdata) {
 		dateNumber = fdata.getDateNumber();
@@ -36,32 +36,35 @@ public class TextController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String sentence = "log" + dateNumber + ".txtを指定します";
+		String fileName = "log" + dateNumber;
+		String sentence = fileName + ".txtを指定します";
+		Date date = new Date();
+		textFileWrite = new TextFileWrite();
+		textFileWrite.titleWrite(date, fileName);
 		model.addAttribute("sentence", sentence);
 		model.addAttribute("message", message);
 		return "create";
 	}
 
-		@RequestMapping("/home/diary")
-		public String view(Model model,FData fdata) {
-			String fileName = "log" + dateNumber;
-			String sentence = thymeleafText.process(dateNumber);
-			model.addAttribute("fileName", fileName);
-			model.addAttribute("sentence", sentence);
-			return "log_list";
-		}
+	@RequestMapping("/home/diary")
+	public String view(Model model, FData fdata) {
+		String fileName = "log" + dateNumber;
+		String sentence = thymeleafText.process(dateNumber);
+		model.addAttribute("fileName", fileName);
+		model.addAttribute("sentence", sentence);
+		return "log_list";
+	}
 
-		@GetMapping("/home/toukou")
-		public String toukou(Model model) {
-			model.addAttribute("fdata", new FData());
-			System.out.println(dateNumber);
-			return "toukou";
-		}
+	@GetMapping("/home/toukou")
+	public String toukou(Model model) {
+		model.addAttribute("fdata", new FData());
+		return "toukou";
+	}
 
 	@RequestMapping("/home")
 	public String home(Model model, FData fdata) {
 		model.addAttribute("fdata", fdata);
-		
+
 		String fileName = "log" + dateNumber;
 		String sentence = thymeleafText.process(fileName);
 		model.addAttribute("fileName", fileName);
@@ -69,19 +72,19 @@ public class TextController {
 		return "home";
 	}
 
-//	@RequestMapping("/home/next")
-//	public String next(Model model, FData fdata) {
-//		String postSentence = fdata.getPostText();
-//		int dateNumber = 6;
-//		String fileName = "log" + dateNumber;
-//		Date date = new Date();
-//		postSentence = createSentence(postSentence, date, fileName);
-//		String sentence = thymeleafText.process(fileName);
-//		model.addAttribute("fileName", fileName);
-//		model.addAttribute("fdata", fdata);
-//		model.addAttribute("sentence", sentence);
-//		return "home";
-//	}
+	//	@RequestMapping("/home/next")
+	//	public String next(Model model, FData fdata) {
+	//		String postSentence = fdata.getPostText();
+	//		int dateNumber = 6;
+	//		String fileName = "log" + dateNumber;
+	//		Date date = new Date();
+	//		postSentence = createSentence(postSentence, date, fileName);
+	//		String sentence = thymeleafText.process(fileName);
+	//		model.addAttribute("fileName", fileName);
+	//		model.addAttribute("fdata", fdata);
+	//		model.addAttribute("sentence", sentence);
+	//		return "home";
+	//	}
 	//	@PostMapping("/home/kakunin")
 	//	public String kakunin(Model model, FData fdata) {
 	//		String sentence = fdata.getPostText();
