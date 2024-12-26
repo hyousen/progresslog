@@ -28,17 +28,16 @@ public class ThymeleafText {
 	public String process(int number) {
 		final Context ctx = new Context(Locale.getDefault());
 		String text = this.templateEngine.process("/log" + number + ".txt", ctx);
-
+		//System.out.println(text);
 		return text;
 	}
-	
+
 	public String process(String fileName) {
 		final Context ctx = new Context(Locale.getDefault());
 		String text = this.templateEngine.process("/" + fileName + ".txt", ctx);
-
+		//System.out.println(text);
 		return text;
 
-		
 	}
 
 }

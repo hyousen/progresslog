@@ -12,8 +12,19 @@ public class TextFileCreate {
 	private String message;
 
 	public void textCreate(int number) throws IOException {
-		
+
 		String fileName = "log" + number;
+
+		File file = new File("C:/hsakuchi/work/ProgressLog/src/main/resources/templates/" + fileName + ".txt");
+		if (file.createNewFile()) {
+			this.message = "新しいファイルがつくられました";
+		} else {
+			this.message = "すでにこのファイルは存在します";
+		}
+
+	}
+
+	public void textCreate(String fileName) throws IOException {
 
 		File file = new File("C:/hsakuchi/work/ProgressLog/src/main/resources/templates/" + fileName + ".txt");
 		if (file.createNewFile()) {

@@ -32,7 +32,6 @@ public class TextController {
 		try {
 			textFileCreate.textCreate(dateNumber);
 			message = textFileCreate.getMessage();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -41,6 +40,7 @@ public class TextController {
 		Date date = new Date();
 		textFileWrite = new TextFileWrite();
 		textFileWrite.titleWrite(date, fileName);
+		textFileWrite.textOverWrite(Integer.toString(dateNumber), "dateNumber");
 		model.addAttribute("sentence", sentence);
 		model.addAttribute("message", message);
 		return "create";
@@ -49,7 +49,14 @@ public class TextController {
 	@RequestMapping("/home/diary")
 	public String view(Model model, FData fdata) {
 		String fileName = "log" + dateNumber;
-		String sentence = thymeleafText.process(dateNumber);
+		long sleepTime = 2000;
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String sentence = thymeleafText.process(fileName);
 		model.addAttribute("fileName", fileName);
 		model.addAttribute("sentence", sentence);
 		return "log_list";
@@ -63,9 +70,20 @@ public class TextController {
 
 	@RequestMapping("/home")
 	public String home(Model model, FData fdata) {
+		String dateText =thymeleafText.process("dateNumber");
+		dateNumber = Integer.parseInt(dateText);
+		fdata.setDateNumber(dateNumber);
 		model.addAttribute("fdata", fdata);
 
 		String fileName = "log" + dateNumber;
+		long sleepTime = 2000;
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		
 		String sentence = thymeleafText.process(fileName);
 		model.addAttribute("fileName", fileName);
 		model.addAttribute("sentence", sentence);
