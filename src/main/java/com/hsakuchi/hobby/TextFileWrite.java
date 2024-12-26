@@ -11,8 +11,9 @@ public class TextFileWrite {
 	public void textWrite(String sentence, String fileName) {
 
 		try {
-			File file = new File("C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\" + fileName + ".txt");
-			
+			File file = new File(
+					"C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\" + fileName + ".txt");
+
 			if (checkBeforeWritefile(file)) {
 				FileWriter filewriter = new FileWriter(file, true);
 
@@ -40,8 +41,9 @@ public class TextFileWrite {
 	public void titleWrite(Date date, String fileName) {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日(E)");
-			File file = new File("C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\" + fileName + ".txt");
-			
+			File file = new File(
+					"C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\" + fileName + ".txt");
+
 			if ((checkBeforeWritefile(file)) && (checkFileEmpty(file))) {
 				FileWriter filewriter = new FileWriter(file, true);
 
@@ -59,11 +61,30 @@ public class TextFileWrite {
 	private boolean checkFileEmpty(File file) {
 
 		if (file.length() == 0L) {
-            return true;
-        }else {
-        	return false;
-        }
-		
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public void textOverWrite(String sentence, String fileName) {
+		try {
+			File file = new File("C:\\hsakuchi\\work\\ProgressLog\\src\\main\\resources\\templates\\" + fileName + ".txt");
+
+			if (checkBeforeWritefile(file)) {
+				FileWriter filewriter = new FileWriter(file, false);
+
+				filewriter.write(sentence);
+
+				filewriter.close();
+			} else {
+				System.out.println("ファイルに書き込めません");
+			}
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+
 	}
 
 }
