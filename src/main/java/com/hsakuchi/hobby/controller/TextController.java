@@ -35,7 +35,7 @@ public class TextController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String fileName = "log" + dateNumber;
+		String fileName = createFileName();
 		String sentence = fileName + ".txtを指定します";
 		Date date = new Date();
 		textFileWrite = new TextFileWrite();
@@ -48,7 +48,7 @@ public class TextController {
 
 	@RequestMapping("/home/diary")
 	public String view(Model model, FData fdata) {
-		String fileName = "log" + dateNumber;
+		String fileName = createFileName();
 		long sleepTime = 2000;
 		try {
 			Thread.sleep(sleepTime);
@@ -75,15 +75,7 @@ public class TextController {
 		fdata.setDateNumber(dateNumber);
 		model.addAttribute("fdata", fdata);
 
-		String fileName = "log" + dateNumber;
-		long sleepTime = 2000;
-		try {
-			Thread.sleep(sleepTime);
-		} catch (InterruptedException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		
+		String fileName = createFileName();
 		String sentence = thymeleafText.process(fileName);
 		model.addAttribute("fileName", fileName);
 		model.addAttribute("sentence", sentence);
@@ -109,6 +101,10 @@ public class TextController {
 	//		model.addAttribute("sentence", sentence);
 	//		return "kakunin";
 	//	}
+	
+	/*
+	 * 受けとった文章をファイルに書き込み
+	 */
 
 	@PostMapping("/home/result")
 	public String result(Model model, FData fdata) {
@@ -127,4 +123,13 @@ public class TextController {
 		textFileWrite.textWrite(postSentence, fileName);
 		return postSentence;
 	}
+	
+	private String createFileName() {
+		if(dateNumber == 0) {
+			return "todo";
+		}else {
+			return "log" + dateNumber;
+		}
+	}
+	
 }
