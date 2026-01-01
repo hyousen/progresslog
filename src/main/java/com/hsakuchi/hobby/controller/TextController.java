@@ -252,16 +252,11 @@ public class TextController {
 			@RequestParam("todoText") String todoText,
 			RedirectAttributes attrs) {
 
-		//		fileService.overwrite("todo", todoText);
-
 		todoWriteService.save(todoText);
 
 		attrs.addFlashAttribute("message", "TODOを保存しました");
 		return "redirect:/home/todo";
 	}
-
-
-
 
 	/*
 	 * 受けとった文章をファイルに書き込み

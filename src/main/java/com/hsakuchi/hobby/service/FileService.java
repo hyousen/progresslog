@@ -18,14 +18,6 @@ public class FileService {
 	@Value("${app.log.dir}")
 	private String logDir;
 
-	//	private Path resolvePath(String fileName) throws IOException {
-	//		Path dir = Paths.get(logDir);
-	//		if (Files.notExists(dir)) {
-	//			Files.createDirectories(dir); // mkdirs より安全
-	//		}
-	//		return dir.resolve(fileName + ".txt");
-	//	}
-
 	private Path resolvePathForRead(String fileName) {
 		return Paths.get(logDir, fileName + ".txt");
 	}
@@ -38,26 +30,12 @@ public class FileService {
 		return dir.resolve(fileName + ".txt");
 	}
 
-
-	//	public boolean exists(String fileName) {
-	//		try {
-	//			return Files.exists(resolvePath(fileName));
-	//		} catch (IOException e) {
-	//			return false;
-	//		}
-	//	}
 	@Deprecated
 	public boolean exists(String fileName) {
 		Path path = resolvePathForRead(fileName);
 		return Files.exists(path);
 	}
 
-	//	public void create(String fileName) throws IOException {
-	//		Path path = resolvePath(fileName);
-	//		if (Files.notExists(path)) {
-	//			Files.createFile(path);
-	//		}
-	//	}
 	@Deprecated
 	public void create(String fileName) throws IOException {
 		Path path = resolvePathForWrite(fileName);
@@ -66,15 +44,6 @@ public class FileService {
 		}
 	}
 
-	//	public void write(String fileName, String content) throws IOException {
-	//		Path path = resolvePath(fileName);
-	//
-	//		// append = true、UTF-8 固定
-	//		Files.write(path,
-	//				(content + System.lineSeparator()).getBytes(StandardCharsets.UTF_8),
-	//				StandardOpenOption.CREATE,
-	//				StandardOpenOption.APPEND);
-	//	}
 	@Deprecated
 	public void write(String fileName, String content) throws IOException {
 		Path path = resolvePathForWrite(fileName);
@@ -87,30 +56,6 @@ public class FileService {
 				);
 	}
 
-	//	public void write(String fileName, LocalDateTime date) throws IOException {
-	//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日(E)");
-	//		write(fileName, sdf.format(date));
-	//	}
-	
-
-
-	// ★ 新規：TODO専用 or 上書き専用
-	//	public void overwrite(String fileName, String text) {
-	//		try {
-	//	        Path path = resolvePath(fileName);
-	//
-	//	        Files.writeString(
-	//	            path,
-	//	            text.replace("\uFEFF", ""),   // BOM 除去
-	//	            StandardCharsets.UTF_8,
-	//	            StandardOpenOption.CREATE,
-	//	            StandardOpenOption.TRUNCATE_EXISTING
-	//	        );
-	//
-	//	    } catch (IOException e) {
-	//	        throw new RuntimeException(e);
-	//	    }
-	//	}
 	@Deprecated
 	public void overwrite(String fileName, String text) {
 		try {
@@ -176,17 +121,6 @@ public class FileService {
 	}
 	
 }
-//	public String read(String fileName) {
-//		try {
-//			Path path = resolvePath(fileName);
-//			if (Files.notExists(path)) return null;
-//			return Files.readString(path, StandardCharsets.UTF_8);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
-
 
 
 
