@@ -1,13 +1,8 @@
 package com.hsakuchi.hobby.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -143,23 +138,6 @@ public class TextController {
 		model.addAttribute("fileName", fileName);
 		model.addAttribute("log", log);
 
-		//		String sentence = fileService.read(fileName);
-
-		// ★ ここ！
-		//		boolean exists = sentence != null && !sentence.isBlank();
-		//		model.addAttribute("exists", exists);
-		//
-		//		model.addAttribute("fileName", fileName);
-		//		model.addAttribute("lines", convertToLines(sentence));
-
-		//		DailyLogParser parser = new DailyLogParser();
-		//	    DailyLogDto log = parser.parse(sentence);
-
-
-		//		ParsedDailyLog log = dailyLogParser.parse(sentence);
-
-		//		model.addAttribute("log", log);
-
 		return "log_list"; // ← これでOK！
 	}
 
@@ -179,93 +157,6 @@ public class TextController {
 		attrs.addFlashAttribute("message", "保存しました");
 		return "redirect:/home/diary";
 	}
-
-
-	//		LocalDate date = fdata.getLogDate();
-	//		String fileName = createFileName(date);
-
-	//		try {
-	//			// ★ ここで初めて「なければ作る」
-	//			if (!fileService.exists(fileName)) {
-	//				fileService.create(fileName);
-	//				fileService.write(fileName, LocalDateTime.now()); // 日付行
-	//			}
-	//			// ★ 旧「result」の加工処理をここに統合する
-	//			String postSentence;
-	//			if ("with".equals(fdata.getTagType())) {
-	//				postSentence = createSentence(sentence, new Date(), fileName);
-	//			} else {
-	//				postSentence = createTime(new Date(), fileName);
-	//			}
-	//
-	//			fileService.write(fileName, postSentence);
-	//			attrs.addFlashAttribute("message", "保存しました");
-	//
-	//		} catch (Exception e) {
-	//
-	//			attrs.addFlashAttribute("error", "失敗: " + e.getMessage());
-	//
-	//		}
-	//
-	//		return "redirect:/home/diary";
-
-	//	@PostMapping("/home/diary/write")
-	//	public String writeDiary(
-	//	        Model model,
-	//	        @ModelAttribute("fdata") FData fdata) {
-	//
-	//	    // --- 日付とファイル名 ---
-	//	    LocalDate date = fdata.getLogDate();
-	//	    String fileName = createFileName(date);
-	//	    
-	//	 // ★ createSentence/createTime をここで呼ぶ
-	//	    String postSentence;
-	//
-	//	    if ("with".equals(fdata.getTagType())) {
-	//	        postSentence = createSentence(inputSentence, new Date(), fileName);
-	//	    } else {
-	//	        postSentence = createTime(new Date(), fileName);
-	//	    }
-	//
-	//	    try {
-	//	        fileService.write(fileName, postSentence);
-	//	        attrs.addFlashAttribute("message", "保存しました");
-	//	    } catch (Exception e) {
-	//	        attrs.addFlashAttribute("error", "失敗: " + e.getMessage());
-	//	    }
-	//
-	//	    return "redirect:/home/diary";
-
-	//	@GetMapping("/home/diary")
-	//	public String view(
-	//	        @ModelAttribute("fdata") FData fdata,
-	//	        Model model,
-	//	        HttpServletResponse response) {
-	//
-	//	    disableCache(response);
-	//
-	//	    LocalDate date = fdata.getLogDate();
-	//	    String fileName = createFileName(date);
-	//
-	//	    // GETでの書き込み（現仕様に従って残す）
-	//	    if (fdata.getPostText() != null && !fdata.getPostText().isBlank()) {
-	//	        try {
-	//	            fileService.write(fileName, fdata.getPostText());
-	//	            fdata.setPostText(null);
-	//	        } catch (IOException e) {
-	//	            e.printStackTrace();
-	//	        }
-	//	    }
-	//
-	//	    // ファイル内容の取得（nullを許容しない）
-	//	    String sentence = fileService.read(fileName);
-	//	    if (sentence == null) sentence = ""; // ← null安全性を追加
-	//
-	//	    model.addAttribute("fileName", fileName);
-	//	    model.addAttribute("lines", convertToLines(sentence));
-	//
-	//	    return "log_list";
-	//	}
 
 	@GetMapping("/home/toukou")
 	public String toukou(Model model, @ModelAttribute("fdata") FData fdata,@RequestParam(required = false) LocalDate logDate) {
@@ -304,18 +195,8 @@ public class TextController {
 
 		DailyLogViewDto log = diaryReadService.readByDate(date);
 
-		//		model.addAttribute("exists", log.isExists());
 		model.addAttribute("log", log);
 		model.addAttribute("fileName",fileName);
-		//	    String fileName = date.format(DateTimeFormatter.BASIC_ISO_DATE); // yyyyMMdd
-
-		//		String sentence = fileService.read(fileName);
-
-		//		boolean exists = sentence != null && !sentence.isBlank();
-		//		fdata.setFileExist(exists);
-		//		model.addAttribute("exists", exists);
-		//		model.addAttribute("fileName", fileName);
-		//		model.addAttribute("lines", convertToLines(sentence));
 
 		return "home";
 	}
@@ -327,30 +208,12 @@ public class TextController {
 				? fdata.getLogDate()
 						: LocalDate.now();
 
-		//		String fileName = "log" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
-
 		DailyLogViewDto log = diaryReadService.readByDate(date);
-
-		//		if (log.isExists()) {
-		//		    return "redirect:/home/diary";
-		//		}
-		//		return "redirect:/home/create";
 
 		return log.isExists()
 				? "redirect:/home/diary"
 						: "redirect:/home/create";
 	}
-
-	//		String sentence = fileService.read(fileName);
-
-	//		if (sentence != null && !sentence.isBlank()) {
-	//			// 記事が存在 → 記事画面へ
-	//			return "redirect:/home/diary";
-	//		}
-
-	// 記事が存在しない → 作成画面へ
-	//		return "redirect:/home/create";
-
 
 	@GetMapping("/home/todo")
 	public String todo(Model model, HttpServletResponse response) {
@@ -358,9 +221,6 @@ public class TextController {
 		disableCache(response);
 
 		String fileName = "todo"; // ★ 日付なし
-		//		String sentence = fileService.read(fileName);
-
-		//		boolean exists = !sentence.isBlank();
 
 		TodoViewDto todo = todoReadService.read();
 
@@ -377,7 +237,6 @@ public class TextController {
 		disableCache(response);
 
 		String fileName = "todo";
-		//		String sentence = fileService.read(fileName);
 
 		TodoViewDto todo = todoReadService.read();
 
@@ -387,25 +246,6 @@ public class TextController {
 
 		return "todo_edit";
 	}
-
-	//	@PostMapping("/home/todo/save")
-	//	public String saveTodo(
-	//	        @RequestParam("text") String text,
-	//	        RedirectAttributes attrs) {
-	//		
-	//		// BOM 除去
-	//		//text = text.replace("\uFEFF", "");
-	//
-	//
-	//	    try {
-	//	        fileService.write("todo", text);
-	//	        attrs.addFlashAttribute("message", "TODOを保存しました");
-	//	    } catch (Exception e) {
-	//	        attrs.addFlashAttribute("error", "保存に失敗しました");
-	//	    }
-	//
-	//	    return "redirect:/home/todo";
-	//	}
 
 	@PostMapping("/home/todo/save")
 	public String saveTodo(
@@ -447,29 +287,6 @@ public class TextController {
 	//		model.addAttribute("postSentence", postSentence);
 	//		return "result";
 	//	}
-
-	private String createSentence(String sentence, Date date, String fileName) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd日(E)HH:mm:ss");
-		return "・" + sentence + sdf.format(date);
-	}
-
-	private String createTime(Date date, String fileName) {
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		return "" + sdf.format(date);
-
-	}
-
-	private List<String> convertToLines(String sentence) {
-		if (sentence == null || sentence.isBlank()) {
-			return List.of();
-		}
-
-		return Arrays.stream(sentence.split("\\R"))
-				.map(line -> line.replaceAll(
-						"(\\d{1,2}日\\(.\\)\\d{2}:\\d{2}:\\d{2})$",
-						"<span class='hidden-date'>$1</span>"))
-				.collect(Collectors.toList());
-	}
 
 	private void disableCache(HttpServletResponse res) {
 		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
