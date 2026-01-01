@@ -34,7 +34,7 @@ build/
 
 
 /src/main/resources/templates/hobby/log**.txt
-/src/main/resources/templates/hobby/**.txt
+/src/main/resources/templates/hobby/todo.txt
 /src/main/resources/templates/**.txt
 
 
