@@ -13,13 +13,22 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Noto+Serif+JP:wght@200..900&family=Zen+Maru+Gothic&display=swap"
 		rel="stylesheet">
-		
+
 	<title>佐久知の作業ログ</title>
 
 	<style>
 		body {
 			font-family: "Zen Maru Gothic", serif;
 			;
+		}
+
+		.log-text {
+			font-family: monospace;
+			/* 必須: 等幅 */
+			white-space: pre;
+			/* タブを維持 */
+			tab-size: 4;
+			/* タブの幅を調整（好みにより変更可） */
 		}
 	</style>
 </head>
@@ -32,16 +41,35 @@
 	</nav>
 
 	<div class="container">
-		<div class="row">
-			<form th:action="@{/home/diary}" method="post">
-				<p th:text="${sentence}"></p>
-				<input type="submit" class="btn btn-primary mt-1" value="指定する" />
-				<a href="/home" class="btn btn-success me-1 mt-1">キャンセル</a>
+		<!--		<div class="row">-->
+		<!--			<form th:action="@{/home/diary}" method="post">-->
+		<!--				<p th:text="${sentence}"></p>-->
+		<!--				<input type="submit" class="btn btn-primary mt-1" value="指定する" />-->
+		<!--				<a href="/home" class="btn btn-success me-1 mt-1">キャンセル</a>-->
+		<!--			</form>-->
+		<!--		</div>-->
+
+		<!-- 既に記事がある場合 -->
+		<div th:if="${exists}">
+			<p class="text-success">ファイル <span th:text="${fileName}"></span>.txt は既に存在します。</p>
+			<a th:href="@{/home/diary}" class="btn btn-primary">記事を見る</a>
+			<a th:href="@{/home}" class="btn btn-warning">戻る</a>
+		</div>
+
+		<!-- 記事がない（作成してよい）場合 -->
+		<div th:unless="${exists}">
+			<p class="text-muted">
+				ファイル <strong th:text="${fileName}"></strong>.txt は存在しません。作成しますか？
+			</p>
+
+			<form th:action="@{/home/create}" method="post" th:object="${fdata}">
+				<input type="hidden" th:field="*{fileName}" />
+				<button type="submit" class="btn btn-primary">作成する</button>
+				<a th:href="@{/home}" class="btn btn-secondary">キャンセル</a>
 			</form>
 		</div>
-		<div>
-			<p th:text="${message}"></p>
-		</div>
+
+
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

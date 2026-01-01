@@ -45,53 +45,25 @@
 
 	<div class="container">
 
-		<!-- 操作ボタン -->
-		<div class="mb-3">
-			<a th:href="@{/home/toukou(logDate=${fdata.logDate})}" class="btn btn-success mt-1">投稿する</a>
-			<a th:href="@{/home/diary}" class="btn btn-secondary mt-1">リロード</a>
-			<a th:href="@{/home(logDate=${fdata.logDate})}" class="btn btn-warning mt-1">戻る</a>
-		</div>
 
-		<!-- ファイル名の表示 -->
 		<p th:text="${fileName}" class="fw-bold"></p>
 
-		<div th:if="${!log.exists}" class="alert alert-secondary">
-			この日のログはまだありません
+		<div th:if="${!todo.exists}">
+			まだTODOはありません
 		</div>
-		<div th:if="${log.exists}">
-			<h4 th:text="${log.displayDate}"></h4>
 
-			<div th:each="block : ${log.blocks}">
-				<div th:if="${block.time != ''}">
-					<span th:text="${block.time}"></span>
-				</div>
-
-				<ul>
-					<li th:each="item : ${block.items}" th:text="${item}"></li>
-				</ul>
-			</div>
+		<div class="mt-2">
+			<a th:href="@{/home/todo/edit}" class="btn btn-success mb-3">編集</a>
+			<a th:href="@{/home}" class="btn btn-secondary ms-2 mb-3">戻る</a>
 		</div>
-		<!--		<div th:each="block : ${log.blocks}">-->
-		<!--			<div th:text="${block.time}"></div>-->
 
-		<!--			<ul>-->
-		<!--				<li th:each="item : ${block.items}" th:text="${item}"></li>-->
-		<!--			</ul>-->
-		<!--		</div>-->
-
-		<!--		<div th:each="block : ${log.blocks}">-->
-		<!--			<div th:if="${block.time != null}" th:text="${block.time}"></div>-->
-
-		<!--			<ul>-->
-		<!--				<li th:each="item : ${block.items}" th:text="${item}"></li>-->
-		<!--			</ul>-->
-		<!--		</div>-->
+		<div th:if="${todo.exists}">
+			<pre class="log-text" th:each="str : ${todo.lines}" th:text="${str}">
+    </pre>
+		</div>
 
 
-		<!--ログ内容-->
-		<!--		<div>-->
-		<!--			<pre class="log-text" th:each="str : ${lines}" th:utext="${str}"></pre>-->
-		<!--		</div>-->
+
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

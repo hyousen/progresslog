@@ -33,4 +33,7 @@ build/
 .vscode/
 
 
-/src/main/resources/templates/log**.txt
+/src/main/resources/templates/hobby/log**.txt
+
+# log files
+logs/

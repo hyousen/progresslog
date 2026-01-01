@@ -1,0 +1,2 @@
+@echo off
+find /n 謎 log20200806.txt
