@@ -210,9 +210,11 @@ public class TextController {
 
 		DailyLogViewDto log = diaryReadService.readByDate(date);
 
-		return log.isExists()
-				? "redirect:/home/diary"
-						: "redirect:/home/create";
+//		return log.isExists()
+//				? "redirect:/home/diary"
+//						: "redirect:/home/create";
+		
+		return "redirect:/home/create";
 	}
 
 	@GetMapping("/home/todo")
