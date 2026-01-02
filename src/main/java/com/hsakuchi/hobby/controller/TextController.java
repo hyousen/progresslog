@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -178,28 +177,28 @@ public class TextController {
 		return "toukou";
 	}
 
-	@RequestMapping("/home")
-	public String home(Model model,
-			@ModelAttribute("fdata") FData fdata,
-			HttpServletResponse response) {
-
-		disableCache(response);
-
-		LocalDate date = fdata.getLogDate() != null
-				? fdata.getLogDate()
-						: LocalDate.now();
-
-		fdata.setLogDate(date);
-
-		String fileName = createFileName(date);
-
-		DailyLogViewDto log = diaryReadService.readByDate(date);
-
-		model.addAttribute("log", log);
-		model.addAttribute("fileName",fileName);
-
-		return "home";
-	}
+//	@RequestMapping("/home")
+//	public String home(Model model,
+//			@ModelAttribute("fdata") FData fdata,
+//			HttpServletResponse response) {
+//
+//		disableCache(response);
+//
+//		LocalDate date = fdata.getLogDate() != null
+//				? fdata.getLogDate()
+//						: LocalDate.now();
+//
+//		fdata.setLogDate(date);
+//
+//		String fileName = createFileName(date);
+//
+//		DailyLogViewDto log = diaryReadService.readByDate(date);
+//
+//		model.addAttribute("log", log);
+//		model.addAttribute("fileName",fileName);
+//
+//		return "home";
+//	}
 
 	@GetMapping("/home/select")
 	public String selectDate(@ModelAttribute("fdata") FData fdata) {
