@@ -1,7 +1,5 @@
 package com.hsakuchi.hobby.controller;
 
-import java.time.LocalDate;
-
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +16,10 @@ import com.hsakuchi.hobby.service.DiaryReadService;
 @Controller
 @RequestMapping("/home")
 @SessionAttributes("fdata")
-public class HomeController {
+public class HomeController extends BaseHomeController{
 	@Autowired
 	private DiaryReadService diaryReadService;
-	
-	@ModelAttribute("fdata")
-	public FData setUpFdata() {
-		// LocalDate初期化
-		FData fdata = new FData();
-		fdata.setLogDate(LocalDate.now());
-		return fdata;
-	}
-//
+
 	@RequestMapping
     public String home(@ModelAttribute("fdata") FData fdata,
                        Model model,
@@ -41,20 +31,8 @@ public class HomeController {
         DailyLogViewDto log = diaryReadService.readByDate(fdata.getLogDate());
 
         model.addAttribute("log",log);
-       // fdata.setLogDate(log.getDate());
 
         return "home";
     }
-
-//    @GetMapping("/select")
-//    public String select(@ModelAttribute("fdata") FData fdata) {
-//        return "redirect:/home/create";
-//    }
-//    
-    private void disableCache(HttpServletResponse res) {
-		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		res.setHeader("Pragma", "no-cache");
-		res.setDateHeader("Expires", 0);
-	}
 
 }
