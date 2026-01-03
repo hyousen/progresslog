@@ -19,13 +19,15 @@ public class DiaryWriteService {
     public void write(LocalDate logDate, String tagType, String sentence) {
 
         try {
+        	
+        	ensureDiaryExists(logDate);
             // ① ファイルがなければ作る
-            if (!fileService.existsDiary(logDate)){
-                fileService.createDiary(logDate);
-
-                // ② 最初の1行に日付を書く
-                fileService.writeDiary(logDate, formatDisplayDate(logDate));
-            }
+//            if (!fileService.existsDiary(logDate)){
+//                fileService.createDiary(logDate);
+//
+//                // ② 最初の1行に日付を書く
+//                fileService.writeDiary(logDate, formatDisplayDate(logDate));
+//            }
 
             // ③ 本文を整形
             String line = formatLine(tagType, sentence);
@@ -40,10 +42,12 @@ public class DiaryWriteService {
     
     public void openOrCreate(LocalDate date) {
         try {
-            if (!fileService.existsDiary(date)) {
-                fileService.createDiary(date);
-                fileService.writeDiary(date, formatDisplayDate(date));
-            }
+        	
+        	ensureDiaryExists(date);
+//            if (!fileService.existsDiary(date)) {
+//                fileService.createDiary(date);
+//                fileService.writeDiary(date, formatDisplayDate(date));
+//            }
         } catch (IOException e) {
             throw new RuntimeException("日記の作成に失敗しました", e);
         }
@@ -69,6 +73,13 @@ public class DiaryWriteService {
 
         // time の場合
         return now.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+    
+    private void ensureDiaryExists(LocalDate date) throws IOException {
+        if (!fileService.existsDiary(date)) {
+            fileService.createDiary(date);
+            fileService.writeDiary(date, formatDisplayDate(date));
+        }
     }
 }
 
