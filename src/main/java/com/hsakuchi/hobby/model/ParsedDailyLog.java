@@ -11,7 +11,7 @@ public class ParsedDailyLog {
 
     private LocalDate date;
     private String displayDate;
-    private List<ParsedTimeBlock> blocks = new ArrayList<>();;
+    private List<ParsedTimeBlock> blocks = new ArrayList<>();
 //    private String displayFileName;
 
     // getter / setter 
