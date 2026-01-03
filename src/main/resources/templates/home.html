@@ -206,9 +206,11 @@
 					<a th:href="@{/home/create}" class="btn btn-success btn-sm">新規作成</a>
 				</div>
 
-				<div th:if="${log.exists}">
-					<p th:text="${fileName}"></p>
+				
+				<p th:text="${log.title}"></p>
 
+				<div th:if="${log.exists}">
+					
 					<h4 th:text="${log.displayDate}"></h4>
 
 					<div th:each="block : ${log.blocks}">

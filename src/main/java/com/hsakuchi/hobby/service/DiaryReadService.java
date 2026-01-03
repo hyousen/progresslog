@@ -2,6 +2,7 @@ package com.hsakuchi.hobby.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class DiaryReadService {
 	}
 
 	public DailyLogViewDto readByDate(LocalDate date) {
-//		String fileName = "log" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
+		//		String fileName = "log" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
 
 		String raw;
 		try {
@@ -36,8 +37,16 @@ public class DiaryReadService {
 		}
 
 		ParsedDailyLog parsed = parser.parse(raw);
-		return DailyLogViewDto.from(parsed);
+
+		String title = buildTitle(date);
+
+		return DailyLogViewDto.from(parsed, title);
 	}
+
+	private String buildTitle(LocalDate date) {
+		return "log" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
+	}
+
 
 
 }
