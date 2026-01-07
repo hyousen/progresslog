@@ -1,13 +1,13 @@
 package com.hsakuchi.hobby.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.hsakuchi.hobby.model.FData;
+import com.hsakuchi.hobby.util.FileNameUtil;
 
 public abstract class BaseHomeController {
 
@@ -34,6 +34,6 @@ public abstract class BaseHomeController {
        ファイル名生成
        ========================== */
     protected String createFileName(LocalDate date) {
-		return "log" + date.format(DateTimeFormatter.BASIC_ISO_DATE); // yyyyMMdd
+		return FileNameUtil.buildFileName(date);
 	}
 }
