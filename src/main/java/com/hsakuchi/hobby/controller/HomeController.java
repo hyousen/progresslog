@@ -26,7 +26,6 @@ public class HomeController extends BaseHomeController{
                        HttpServletResponse response) {
 
         disableCache(response);
-        fdata.setLogDate(fdata.getLogDate());
 
         DailyLogViewDto log = diaryReadService.readByDate(fdata.getLogDate());
 

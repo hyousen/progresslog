@@ -7,10 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.hsakuchi.hobby.util.FileNameUtil;
 
 @Service
 public class FileService {
@@ -117,7 +118,7 @@ public class FileService {
 	
 	// ★ private に閉じる
 	private String diaryFileName(LocalDate date) {
-		return "log" + date.format(DateTimeFormatter.BASIC_ISO_DATE);
+		return  FileNameUtil.buildFileName(date);
 	}
 	
 }

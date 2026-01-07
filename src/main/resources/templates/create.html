@@ -43,16 +43,16 @@
 	<div class="container">
 
 		<!-- 既に記事がある場合 -->
-		<div th:if="${exists}">
-			<p class="text-success">ファイル <span th:text="${fileName}"></span>.txt は既に存在します。</p>
+		<div th:if="${view.exists}">
+			<p class="text-success">ファイル <span th:text="${view.title}"></span>.txt は既に存在します。</p>
 			<a th:href="@{/home/diary}" class="btn btn-primary">記事を見る</a>
 			<a th:href="@{/home}" class="btn btn-warning">戻る</a>
 		</div>
 
 		<!-- 記事がない（作成してよい）場合 -->
-		<div th:unless="${exists}">
+		<div th:unless="${view.exists}">
 			<p class="text-muted">
-				ファイル <strong th:text="${fileName}"></strong>.txt は存在しません。作成しますか？
+				ファイル <strong th:text="${view.title}"></strong>.txt は存在しません。作成しますか？
 			</p>
 
 			<form th:action="@{/home/create}" method="post" th:object="${fdata}">
